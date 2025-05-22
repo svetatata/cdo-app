@@ -1,0 +1,84 @@
+:root {
+    /* Цвета */
+    --color-primary: #624b99; /* purple-700 */
+    --color-primary-dark: #4a3191; /* purple-800 */
+    --color-primary-darker: #281468; /* purple-900 */
+    --color-secondary: #F6AD55; /* orange-400 */
+    --color-secondary-dark: #753f00; /* orange-500 */
+    
+    /* Размеры */
+    --header-height: 4rem;
+    --container-padding: 1rem;
+    
+    /* Анимации */
+    --transition-base: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+    
+    /* Тени */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    
+    /* Скругления */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-full: 9999px;
+}
+
+
+.btn {
+    @apply rounded-full font-bold transition whitespace-nowrap px-6 py-3;
+}
+.btn-primary {
+    @apply bg-purple-700 hover:bg-purple-800 text-white;
+}
+.btn-outline-primary {
+    @apply border-2 border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white;
+}
+.btn-secondary {
+    @apply bg-orange-500 hover:bg-orange-600 text-white;
+}
+.btn-outline-secondary {
+    @apply border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white;
+}
+.input-field {
+    @apply px-4 py-3 rounded-lg outline-none ring-2 ring-violet-300 focus:ring-orange-400 text-gray-800 placeholder-gray-400 w-full;
+}
+.card {
+    @apply bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105;
+}
+.benefit-card {
+    @apply bg-gray-50 p-6 rounded-lg shadow-md transition-transform hover:scale-105;
+}
+/* Анимации */
+.animate-fadeInUp {
+    @apply opacity-0 transform translate-y-10 transition-all duration-500;
+}
+
+.animate-fadeInUp.visible {
+    @apply opacity-100 translate-y-0;
+}
+
+/* Загрузка */
+.loading-animation {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden;
+}
+
+.loading-spinner {
+    @apply w-16 h-16 border-4 border-white border-t-purple-700 border-r-purple-700 rounded-full animate-spin;
+}
+
+/* Модальные окна */
+.modal {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden;
+}
+
+.modal-content {
+    @apply bg-white rounded-lg p-6 max-w-md w-full relative;
+}
+
+/* Мобильное меню */
+.mobile-menu {
+    @apply hidden md:hidden fixed inset-0 bg-white z-40 overflow-y-auto;
+}
