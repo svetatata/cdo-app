@@ -410,6 +410,59 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+// Обработка отправки формы на главной странице
+const homeApplicationForm = document.getElementById('homeApplicationForm');
+if (homeApplicationForm) {
+    homeApplicationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const form = this;
+        const submitButton = form.querySelector('button[type="submit"]');
+        const errorDiv = document.getElementById('homeApplicationError');
+        
+        submitButton.disabled = true;
+        submitButton.innerHTML = 'Отправка...';
+        errorDiv.classList.add('hidden');
+        errorDiv.textContent = '';
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                form.reset();
+                alert(data.message);
+            } else {
+                if (data.errors) {
+                    let errorMessage = '';
+                    for (const field in data.errors) {
+                        errorMessage += data.errors[field][0] + '\n';
+                    }
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.classList.remove('hidden');
+                } else {
+                    errorDiv.textContent = data.message;
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            errorDiv.textContent = 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.';
+            errorDiv.classList.remove('hidden');
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Отправить заявку';
+        });
+    });
+}
 document.getElementById('callRequestForm').addEventListener('submit', function(e) {
     e.preventDefault();
     

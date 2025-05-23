@@ -18,24 +18,56 @@
                 </div>
                 <div class="md:w-1/2 bg-white bg-opacity-90 rounded-xl p-8 shadow-xl">
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Хотите учиться дистанционно?</h3>
-                    <form class="space-y-4">
-                        <input type="text" placeholder="ФИО" class="input-field">
-                        <input type="email" placeholder="Email" class="input-field">
-                        <input type="tel" placeholder="Телефон" class="input-field">
-                        <select class="input-field">
-                            <option class="text-gray-400">Выберите желаемое образование</option>
-                            <option>Колледж</option>
-                            <option>Бакалавриат</option>
-                            <option>Магистратура</option>
-                            <option>Переподготовка</option>
+                    <form id="homeApplicationForm" class="space-y-4" action="{{ route('application.submit') }}" method="POST">
+                        @csrf
+                        <input type="text" 
+                               name="name" 
+                               placeholder="ФИО" 
+                               class="input-field" 
+                               required 
+                               minlength="2">
+                        <input type="email" 
+                               name="email" 
+                               placeholder="Email" 
+                               class="input-field" 
+                               required>
+                        <input type="tel" 
+                               name="phone" 
+                               placeholder="Телефон" 
+                               class="input-field" 
+                               required 
+                               minlength="10">
+                        <select name="program" class="input-field" required>
+                            <option value="">Выберите желаемое образование</option>
+                            <option value="college">Колледж</option>
+                            <option value="bachelor">Бакалавриат</option>
+                            <option value="master">Магистратура</option>
+                            <option value="retraining">Переподготовка</option>
                         </select>
-                        <select class="input-field">
-                            <option class="text-gray-400">Выберите программу</option>
-                            <option>Информационные системы и технологии</option>
-                            <option>Бухгалтерский учет</option>
-                            <option>Экономика и право</option>
-                            <option>Информационная безопасность</option>
+                        <select name="direction" class="input-field" required>
+                            <option value="">Выберите направление</option>
+                            <option value="it">IT</option>
+                            <option value="business">Бизнес</option>
+                            <option value="education">Образование</option>
+                            <option value="psychology">Психология</option>
                         </select>
+                        <textarea name="message" 
+                                  placeholder="Ваше сообщение (необязательно)" 
+                                  class="input-field resize-none" 
+                                  rows="3"></textarea>
+                        <div class="flex items-center">
+                            <input type="checkbox" 
+                                   id="homeAgreeTerms" 
+                                   name="agree_terms" 
+                                   class="form-checkbox text-purple-600" 
+                                   required>
+                            <label for="homeAgreeTerms" class="ml-2 text-sm text-gray-600">
+                                Я согласен с <a href="https://www.consultant.ru/document/cons_doc_LAW_61801/" 
+                                              class="text-purple-600 hover:text-purple-800" 
+                                              target="_blank">условиями обработки персональных данных</a>
+                            </label>
+                        </div>
+                        <div id="homeApplicationError" class="text-red-500 text-sm hidden"></div>
                         <button type="submit" class="btn btn-primary w-full">
                             Отправить заявку
                         </button>

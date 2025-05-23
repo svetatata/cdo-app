@@ -26,10 +26,10 @@ class ApplicationRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|max:255',
             'phone' => 'required|min:10|max:20',
-            'program' => 'required|min:2|max:255',
-            'direction' => 'required|min:2|max:255',
+            'degree' => 'required|string|in:college,bachelor,master,training',
+            'program_id' => 'required|exists:programs,id',
             'message' => 'nullable|max:1000',
             'status' => 'required|in:new,in_progress,completed,cancelled'
         ];
@@ -46,8 +46,8 @@ class ApplicationRequest extends FormRequest
             'name' => 'Имя',
             'email' => 'Email',
             'phone' => 'Телефон',
-            'program' => 'Программа',
-            'direction' => 'Направление',
+            'degree' => 'Образование',
+            'program_id' => 'Программа',
             'message' => 'Сообщение',
             'status' => 'Статус'
         ];
@@ -61,7 +61,15 @@ class ApplicationRequest extends FormRequest
     public function messages()
     {
         return [
-            //
-        ];
+            'name.required' => 'Пожалуйста, укажите ваше имя',
+            'name.min' => 'Имя должно содержать минимум 2 символа',
+            'email.required' => 'Пожалуйста, укажите ваш email',
+            'email.email' => 'Пожалуйста, укажите корректный email',
+            'phone.required' => 'Пожалуйста, укажите ваш телефон',
+            'phone.min' => 'Телефон должен содержать минимум 10 символов',
+            'degree.required' => 'Пожалуйста, выберите уровень образования',
+            'program_id.required' => 'Пожалуйста, выберите программу обучения',
+            'program_id.exists' => 'Выбранная программа не существует',
+            'message.max' => 'Сообщение не должно превышать 1000 символов'        ];
     }
 }

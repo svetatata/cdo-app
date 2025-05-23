@@ -49,6 +49,8 @@ Route::get('/degree', function () {
 Route::get('/institutions', [InstitutionController::class, 'index']);
 Route::get('/institution/{slug}', [InstitutionController::class, 'show']);
 Route::post('/call-request', [CallRequestController::class, 'store'])->name('call-request.store');
+Route::post('/application/submit', [ApplicationController::class, 'submit'])->name('application.submit');
+Route::get('/application/programs', [ApplicationController::class, 'getPrograms'])->name('application.programs');
 // Route::middleware('guest')->group(function () {
 //     Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 //     Route::post('/login', [UserController::class, 'login']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ApplicationRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\Program;
 
 /**
  * Class ApplicationCrudController
@@ -44,8 +45,17 @@ class ApplicationCrudController extends CrudController
         CRUD::column('name')->label('Имя');
         CRUD::column('email')->label('Email');
         CRUD::column('phone')->label('Телефон');
-        CRUD::column('program')->label('Программа');
-        CRUD::column('direction')->label('Направление');
+        CRUD::column('degree')->label('Образование')
+            ->type('select_from_array')
+            ->options([
+                'college' => 'Колледж',
+                'bachelor' => 'Бакалавриат',
+                'master' => 'Магистратура',
+                'training' => 'Переподготовка'
+            ]);
+        CRUD::column('program_id')->label('Программа')
+            ->type('relationship')
+            ->attribute('title');
         CRUD::column('status')
             ->label('Статус')
             ->type('select_from_array')
@@ -76,8 +86,21 @@ class ApplicationCrudController extends CrudController
         CRUD::field('name')->label('Имя');
         CRUD::field('email')->label('Email');
         CRUD::field('phone')->label('Телефон');
-        CRUD::field('program')->label('Программа');
-        CRUD::field('direction')->label('Направление');
+        CRUD::field('degree')
+            ->label('Образование')
+            ->type('select_from_array')
+            ->options([
+                'college' => 'Колледж',
+                'bachelor' => 'Бакалавриат',
+                'master' => 'Магистратура',
+                'training' => 'Переподготовка'
+            ]);
+        CRUD::field('program_id')
+            ->label('Программа')
+            ->type('select')
+            ->entity('program')
+            ->attribute('title')
+            ->model(Program::class);
         CRUD::field('message')->label('Сообщение')->type('textarea');
         CRUD::field('status')
             ->label('Статус')

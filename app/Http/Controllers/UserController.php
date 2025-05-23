@@ -77,7 +77,8 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return response()->json(['success' => true, 'redirect' => url('/')]);
+        response()->json(['success' => true]);
+        return redirect('/');
     }
 
     public function profile()
