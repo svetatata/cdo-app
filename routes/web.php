@@ -8,31 +8,45 @@ use App\Http\Controllers\CallRequestController;
 use App\Http\Controllers\ProgramController;
 
 Route::get('/', function () {
-    return view('home');
+    $randomPrograms = \App\Models\Program::where('is_active', true)
+        ->inRandomOrder()
+        ->take(3)
+        ->get();
+        
+    $randomInstitutions = \App\Models\Institution::where('is_active', true)
+        ->inRandomOrder()
+        ->take(3)
+        ->get();
+        
+    return view('home', [
+        'randomPrograms' => $randomPrograms,
+        'randomInstitutions' => $randomInstitutions
+    ]);
 });
 Route::get('/how-to-apply', function () {
     return view('pages.how-to-apply');
-});
+})->name('how-to-apply');
 Route::get('/about', function () {
     return view('pages.about');
-});
+})->name('about');
 Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
 Route::get('/programs/{slug}', [ProgramController::class, 'show'])->name('programs.show');
+
 Route::get('/contacts', function () {
     return view('pages.contacts');
-});
+})->name('contacts');
 Route::get('/how-to-study', function () {
     return view('pages.how-to-study');
-});
+})->name('how-to-study');
 Route::get('/payment', function () {
     return view('pages.payment');
-});
+})->name('payment');
 Route::get('/search', function () {
     $query = request('query');
 
     return view('pages.search-results', [
         'query' => $query]);
-});
+})->name('search');
 
 //Route::post('/application/submit', [ApplicationController::class, 'submit']);
 
@@ -45,9 +59,11 @@ Route::get('/degree', function () {
     return view('pages.degree');
 });
 
-// Маршруты для вузов
-Route::get('/institutions', [InstitutionController::class, 'index']);
-Route::get('/institution/{slug}', [InstitutionController::class, 'show']);
+// Маршруты для учебных заведений
+Route::get('/institutions', [InstitutionController::class, 'index'])->name('institutions.index');
+Route::get('/institutions/{slug}', [InstitutionController::class, 'show'])->name('institutions.show');
+
+Route::get('/application/create', [ApplicationController::class, 'create'])->name('application.create');
 Route::post('/call-request', [CallRequestController::class, 'store'])->name('call-request.store');
 Route::post('/application/submit', [ApplicationController::class, 'submit'])->name('application.submit');
 Route::get('/application/programs', [ApplicationController::class, 'getPrograms'])->name('application.programs');

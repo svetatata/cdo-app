@@ -1,4 +1,12 @@
-<?php $pageTitle = $program->title ?>
+<?php 
+$pageTitle = $program->title;
+$metaDescription = $program->description;
+$metaKeywords = $program->title . ', ' . $program->studyField->name . ', ' . 
+    ($program->degree === 'college' ? 'колледж' : 
+    ($program->degree === 'bachelor' ? 'бакалавриат' : 
+    ($program->degree === 'master' ? 'магистратура' : 'курсы'))) . 
+    ', дистанционное обучение, ' . $program->institution->name;
+?>
 
 @include('layout.header')
 

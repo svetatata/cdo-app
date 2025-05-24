@@ -1,19 +1,12 @@
-{{-- <head>
-    <script>
-        console.log('Тест загрузки JS');
-        alert('JS работает!');
-    </script>
-</head> --}}
+
 <section class="py-12 bg-purple-800 text-white">
-    <div class="container mx-auto px-4 max-w-5xl"> <!-- Уменьшил максимальную ширину контейнера -->
-        <div class="flex flex-col md:flex-row gap-12 items-stretch justify-stretch"> <!-- Уменьшил gap между колонками -->
-            <!-- Левая колонка с текстом -->
-            <div class="md:w-1/3 text-center md:text-left max-w-md"> <!-- Уменьшил max-w -->
-                <h2 class="text-2xl md:text-3xl font-bold mb-4">Хотите учиться дистанционно, но остались вопросы?</h2> <!-- Уменьшил размер шрифта -->
+    <div class="container mx-auto px-4 max-w-5xl"> 
+        <div class="flex flex-col md:flex-row gap-12 items-stretch justify-stretch"> 
+            <div class="md:w-1/3 text-center md:text-left max-w-md"> 
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Хотите учиться дистанционно, но остались вопросы?</h2> 7
                 <p class="text-lg md:text-xl">Оставьте заявку и консультант приемной комиссии свяжется с вами</p>
             </div>
             
-            <!-- Правая колонка с формой -->
             <div class="md:w-2/3 max-w-xl"> 
                 <form class="flex flex-col gap-4" id="callRequestForm" action="/call-request" method="POST"> 
                     @csrf   

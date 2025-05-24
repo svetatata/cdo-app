@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Idea Teach - {{ $pageTitle }}</title>
+    
+    <!-- SEO метатеги -->
+    <meta name="description" content="{{ $metaDescription ?? 'Официальный сайт дистанционного обучения. Высшее образование, колледж, курсы и переподготовка.' }}">
+    <meta name="keywords" content="{{ $metaKeywords ?? 'дистанционное обучение, дистанционное образование, высшее образование, колледж, курсы' }}">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Idea Teach - {{ $pageTitle }}">
+    <meta property="og:description" content="{{ $metaDescription ?? 'Официальный сайт дистанционного обучения. Высшее образование, колледж, курсы и переподготовка.' }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('images/logo.jpg') }}">
+    
+    <!-- Стили и скрипты -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -78,11 +90,11 @@
                          x-transition:leave="transition ease-in duration-150"
                          x-transition:leave-start="opacity-100 transform scale-100"
                          x-transition:leave-end="opacity-0 transform scale-95">
-                        <a href="/programs" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Все программы</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Колледж</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Бакалавриат</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Магистратура</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Переподготовка</a>
+                        <a href="{{ route('programs.index') }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Все программы</a>
+                        <a href="{{ route('programs.index', ['degree' => 'college']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Колледж</a>
+                        <a href="{{ route('programs.index', ['degree' => 'bachelor']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Бакалавриат</a>
+                        <a href="{{ route('programs.index', ['degree' => 'master']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Магистратура</a>
+                        <a href="{{ route('programs.index', ['degree' => 'training']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Переподготовка</a>
                         <a href="/how-to-apply" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Как поступить</a>
                         <a href="/how-to-study" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Как учиться</a>
                         {{-- <a href="/payment" class="block px-4 py-2 text-gray-800 hover:bg-purple-100">Оплата</a> --}}
@@ -132,13 +144,13 @@
             </div>
             
             <!-- Мобильное меню (кнопка) -->
-            <button class="md:hidden focus:outline-none" onclick="toggleMobileMenu()">
+            <a class="md:hidden focus:outline-none" onclick="toggleMobileMenu()">
                 <div class="w-6 h-6 flex flex-col justify-between">
                     <span class="w-full h-0.5 bg-white transform transition-all duration-300" id="burger-top"></span>
                     <span class="w-full h-0.5 bg-white transform transition-all duration-300" id="burger-middle"></span>
                     <span class="w-full h-0.5 bg-white transform transition-all duration-300" id="burger-bottom"></span>
                 </div>
-            </button>
+            </a>
         </nav>
     </div>
 </header>
@@ -162,12 +174,12 @@
                         <i class="fas fa-chevron-down transition-transform duration-300" id="abiturient-arrow"></i>
                     </button>
                     <div id="abiturient-submenu" class="hidden pl-4 space-y-2">
-                        <a href="/programs" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Все программы</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Колледж</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Бакалавриат</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Магистратура</a>
-                        <a href="/degree" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Переподготовка</a>
-                        <a href="/how-to-apply" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Как поступить</a>
+                        <a href="{{ route('programs.index') }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Все программы</a>
+                        <a href="{{ route('programs.index', ['degree' => 'college']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Колледж</a>
+                        <a href="{{ route('programs.index', ['degree' => 'bachelor']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Бакалавриат</a>
+                        <a href="{{ route('programs.index', ['degree' => 'master']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Магистратура</a>
+                        <a href="{{ route('programs.index', ['degree' => 'training']) }}" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Переподготовка</a>
+                        <a href="/how-to-apply class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Как поступить</a>
                         <a href="/how-to-study" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Как учиться</a>
                         <a href="/payment" class="block px-4 py-2 text-gray-800 hover:bg-purple-100 rounded">Оплата</a>
                        

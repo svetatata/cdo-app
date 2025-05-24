@@ -25,11 +25,11 @@
             <div>
                 <h4 class="text-xl font-bold mb-4">Абитуриенту</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-orange-400 transition">Колледж</a></li>
-                    <li><a href="#" class="hover:text-orange-400 transition">Бакалавриат</a></li>
-                    <li><a href="#" class="hover:text-orange-400 transition">Магистратура</a></li>
-                    <li><a href="#" class="hover:text-orange-400 transition">Переподготовка</a></li>
-                    <li><a href="/programs" class="hover:text-orange-400 transition">Все программы</a></li>
+                    <li><a href="{{ route('programs.index', ['degree' => 'college']) }}" class="hover:text-orange-400 transition">Колледж</a></li>
+                    <li><a href="{{ route('programs.index', ['degree' => 'bachelor']) }}" class="hover:text-orange-400 transition">Бакалавриат</a></li>
+                    <li><a href="{{ route('programs.index', ['degree' => 'master']) }}" class="hover:text-orange-400 transition">Магистратура</a></li>
+                    <li><a href="{{ route('programs.index', ['degree' => 'training']) }}" class="hover:text-orange-400 transition">Переподготовка</a></li>
+                    <li><a href="{{ route('programs.index') }}" class="hover:text-orange-400 transition">Все программы</a></li>
                 </ul>
             </div>
             

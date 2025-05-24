@@ -1,4 +1,8 @@
-<?php $pageTitle = 'Вузы и колледжи' ?>
+<?php 
+$pageTitle = 'Вузы и колледжи';
+$metaDescription = 'Список партнерских вузов и колледжей Idea Teach. Выберите учебное заведение для получения качественного образования дистанционно.';
+$metaKeywords = 'вузы, колледжи, партнерские учебные заведения, высшее образование, среднее профессиональное образование, дистанционное обучение';
+?>
 
 @include('layout.header')
 <!-- Заголовок -->
@@ -29,7 +33,7 @@
                         <span class="text-purple-700 font-bold">
                             {{ $institution->type === 'university' ? 'Университет' : 'Колледж' }}
                         </span>
-                        <a href="{{ route('institution.show', $institution->slug) }}" class="text-purple-700 hover:text-purple-800 font-medium">
+                        <a href="{{ route('institutions.show', ['slug' => $institution->slug]) }}" class="text-purple-700 hover:text-purple-800 font-medium">
                             Подробнее →
                         </a>
                     </div>

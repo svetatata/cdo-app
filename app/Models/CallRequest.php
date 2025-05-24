@@ -22,8 +22,6 @@ class CallRequest extends Model
     */
 
     protected $table = 'call_requests';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
         'name',
@@ -31,7 +29,6 @@ class CallRequest extends Model
         'message',
         'status'
     ];
-    // protected $hidden = [];
 
     protected $casts = [
         'created_at' => 'datetime',

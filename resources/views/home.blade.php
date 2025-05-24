@@ -1,4 +1,8 @@
-<?php $pageTitle = 'Главная'?>
+<?php 
+$pageTitle = 'Главная';
+$metaDescription = 'Официальный сайт дистанционного обучения. Высшее образование, колледж, курсы и переподготовка.';
+$metaKeywords = 'дистанционное обучение, дистанционное образование, дистанционное обучение высшее, дистанционное обучение колледж, дистанционное обучение 2025, дистанционное обучение официальный сайт, дистанционное обучение курсы';
+?>
 
     @include('layout.header')
     <main>
@@ -8,12 +12,12 @@
                     <h1 class="text-4xl md:text-5xl font-bold mb-6">Дистанционное образование с Idea Teach</h1>
                     <p class="text-xl mb-8">Официальный представитель ведущих вузов и колледжей России</p>
                     <div class="flex space-x-4">
-                        <button class="btn btn-secondary">
+                        <a href="{{ route('application.create') }}" class="btn btn-secondary">
                             Подать заявку
-                        </button>
-                        <button class="btn btn-outline-secondary">
+                        </a>
+                        <a href="{{ route('how-to-study') }}" class="btn btn-outline-secondary">
                             Узнать больше
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="md:w-1/2 bg-white bg-opacity-90 rounded-xl p-8 shadow-xl">
@@ -83,7 +87,10 @@
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
-                        <img src="{{asset('images/about.jpg')}}" alt="О нас" class="rounded-lg w-full">
+                        <img src="{{asset('images/about.jpg')}}" 
+                             alt="Центр дистанционного обучения Idea Teach" 
+                             class="rounded-lg w-full"
+                             loading="lazy"/>
                     </div>
                     <div class="md:w-1/2">
                         <h2 class="text-3xl font-bold mb-6">Центр дистанционного обучения Idea Teach</h2>
@@ -106,7 +113,7 @@
                                 <span>Техническая поддержка и консультации</span>
                             </li>
                         </ul>
-                        <a href="/about" class="btn btn-primary">Подробнее о нас</a>
+                        <a href="{{ route('about') }}" class="btn btn-primary">Подробнее о нас</a>
                     </div>
                 </div>
             </div>
@@ -118,46 +125,50 @@
                 <h2 class="text-3xl font-bold text-center mb-12">Популярные программы обучения</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Карточка 1 -->
-                    <div class="card">
-                        <img src="{{asset('images/programs/inf.jpg')}}" alt="Информационные системы" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Информационные системы</h3>
-                            <p class="text-gray-600 mb-4">Бакалавриат, срок обучения 4.5 года.</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-purple-700 font-bold">от 25 000 ₽/семестр</span>
-                                <a href="#" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
-                            </div>
-                        </div>
-                    </div>
+                    @foreach($randomPrograms as $program)
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
-                        <img src="{{asset('images/programs/ekonomika.jpg')}}" alt="Экономика" class="w-full h-48 object-cover">
+                    @if($program->image)
+                        <img src="{{ asset('storage/' . $program->image) }}" alt="{{ $program->title }} - программа обучения" class="w-full h-48 object-cover"
+                        loading="lazy">
+                    @else
+                        <div class="w-full h-48 object-cover bg-gray-200 flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-4xl text-gray-400"></i>
+                        </div>
+                    @endif   
+
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Экономика предприятий</h3>
-                            <p class="text-gray-600 mb-4">Колледж, срок обучения 2 года 10 месяцев. Практико-ориентированная программа.</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-purple-700 font-bold">от 15 000 ₽/семестр</span>
-                                <a href="#" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
+                        <h3 class="text-xl font-bold mb-3">{{ $program->title }}</h3>
+                            <p class="text-gray-600 mb-4">
+                                @switch($program->degree)
+                                    @case('college')
+                                        Колледж
+                                        @break
+                                    @case('bachelor')
+                                        Бакалавриат
+                                        @break
+                                    @case('master')
+                                        Магистратура
+                                        @break
+                                    @case('training')
+                                        Курсы
+                                        @break
+                                    @default
+                                        Неизвестно
+                                @endswitch,
+                                срок обучения {{ $program->duration_months }} мес.
+                                {{ $program->short_description }}
+                            </p>
+                                            <div class="flex justify-between items-center">
+                                <span class="text-purple-700 font-bold">от {{ number_format($program->price, 0, ',', ' ') }} ₽/семестр</span>
+                                <a href="{{ route('programs.show', ['slug' => $program->slug]) }}" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Карточка 3 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
-                        <img src="{{asset('images/programs/psycho.jpg')}}" alt="Психология" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Психология управления</h3>
-                            <p class="text-gray-600 mb-4">Магистратура, срок обучения 2.5 года. Для руководителей и HR-специалистов.</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-purple-700 font-bold">от 30 000 ₽/семестр</span>
-                                <a href="#" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 
                 <div class="text-center mt-12">
-                    <a href="/programs" class="btn btn-outline-primary">Все программы обучения</a>
+                    <a href="{{ route('programs.index') }}" class="btn btn-outline-primary">Все программы обучения</a>
                 </div>
             </div>
         </section>
@@ -168,39 +179,28 @@
                 <h2 class="text-3xl font-bold text-center mb-12">Мы сотрудничаем с вузами</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- ВУЗ 1 -->
+                    @foreach($randomInstitutions as $institution)
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img src="{{asset('images/ягту.webp')}}" alt="ЯГТУ" class="w-full h-48 object-cover">
+                    @if($institution->logo)
+                    <img src="{{ asset('storage/' . $institution->logo) }}" alt="{{ $institution->name }}" class="w-full h-48 object-cover" loading="lazy">
+                @else
+                    <div class="w-full h-48 object-cover bg-gray-200 flex items-center justify-center">
+                        <i class="fas fa-university text-4xl text-gray-400"></i>
+                    </div>
+                @endif    
+
+                             
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">ЯГТУ</h3>
-                            <p class="text-gray-600 mb-4">Ярославский государственный технический университет - ведущий технический вуз региона с современной дистанционной платформой.</p>
-                            <a href="/institution" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
+                            <h3 class="text-xl font-bold mb-3">{{ $institution->name }}</h3>
+                            <p class="text-gray-600 mb-4">{{ $institution->description }}</p>
+                            <a href="{{ route('institutions.show', ['slug' => $institution->slug]) }}" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
                         </div>
                     </div>
-                    
-                    <!-- ВУЗ 2 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img src="{{asset('images/universities/ягпу.jpg')}}" alt="ЯГПУ" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">ЯГПУ</h3>
-                            <p class="text-gray-600 mb-4">Ярославский государственный педагогический университет предлагает программы для будущих педагогов и психологов.</p>
-                            <a href="/institution" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
-                        </div>
-                    </div>
-                    
-                    <!-- ВУЗ 3 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img src="{{asset('images/ягк.jpeg')}}" alt="ЯГК" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">ЯГК</h3>
-                            <p class="text-gray-600 mb-4">Ярославский градостроительный колледж - доступное среднее профессиональное образование с дистанционным форматом.</p>
-                            <a href="/institution" class="text-purple-700 hover:text-purple-800 font-medium">Подробнее →</a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 
                 <div class="text-center mt-12">
-                    <a href="/" class="btn btn-outline-primary">Все вузы и колледжи</a>
+                    <a href="{{ route('institutions.index') }}" class="btn btn-outline-primary">Все вузы и колледжи</a>
                 </div>
             </div>
         </section>
@@ -213,7 +213,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Преимущество 1 -->
                     <div class="bg-gray-50 p-6 rounded-lg shadow-md transition-transform hover:scale-105">
-                        <div class="text-purple-700 text-4xl mb-4">
+                        <div class="text-purple-700 text-4xl mb-4 transform transition-all duration-300 hover:scale-110 hover:rotate-12">
                             <i class="fas fa-headset"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Поддержка обучения</h3>
@@ -222,7 +222,7 @@
                     
                     <!-- Преимущество 2 -->
                     <div class="bg-gray-50 p-6 rounded-lg shadow-md transition-transform hover:scale-105">
-                        <div class="text-purple-700 text-4xl mb-4">
+                        <div class="text-purple-700 text-4xl mb-4 transform transition-all duration-300 hover:scale-110 hover:rotate-12">
                             <i class="fas fa-laptop"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Современный формат</h3>
@@ -231,7 +231,7 @@
                     
                     <!-- Преимущество 3 -->
                     <div class="bg-gray-50 p-6 rounded-lg shadow-md transition-transform hover:scale-105">
-                        <div class="text-purple-700 text-4xl mb-4">
+                        <div class="text-purple-700 text-4xl mb-4 transform transition-all duration-300 hover:scale-110 hover:rotate-12">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Диплом гос. образца</h3>
@@ -240,7 +240,7 @@
                     
                     <!-- Преимущество 4 -->
                     <div class="bg-gray-50 p-6 rounded-lg shadow-md transition-transform hover:scale-105">
-                        <div class="text-purple-700 text-4xl mb-4">
+                        <div class="text-purple-700 text-4xl mb-4 transform transition-all duration-300 hover:scale-110 hover:rotate-12">
                             <i class="fas fa-calendar-check"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Гибкий график</h3>
@@ -249,7 +249,7 @@
                     
                     <!-- Преимущество 5 -->
                     <div class="bg-gray-50 p-6 rounded-lg shadow-md transition-transform hover:scale-105">
-                        <div class="text-purple-700 text-4xl mb-4">
+                        <div class="text-purple-700 text-4xl mb-4 transform transition-all duration-300 hover:scale-110 hover:rotate-12">
                             <i class="fas fa-wallet"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Доступная стоимость</h3>
@@ -258,7 +258,7 @@
                     
                     <!-- Преимущество 6 -->
                     <div class="bg-gray-50 p-6 rounded-lg shadow-md transition-transform hover:scale-105">
-                        <div class="text-purple-700 text-4xl mb-4">
+                        <div class="text-purple-700 text-4xl mb-4 transform transition-all duration-300 hover:scale-110 hover:rotate-12">
                             <i class="fas fa-briefcase"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Практическая направленность</h3>
@@ -273,4 +273,5 @@
     </main>
     @include('layout.footer')
 
+    
     

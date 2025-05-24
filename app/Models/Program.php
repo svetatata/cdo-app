@@ -19,8 +19,6 @@ class Program extends Model
     */
 
     protected $table = 'programs';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
         'institution_id',
@@ -35,7 +33,6 @@ class Program extends Model
         'image',
         'is_active'
     ];
-    // protected $hidden = [];
 
     protected $casts = [
         'price' => 'decimal:2',

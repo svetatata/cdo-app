@@ -515,3 +515,58 @@ document.getElementById('callRequestForm').addEventListener('submit', function(e
     });
 });
 
+// Обработка формы обратной связи
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = this;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const formData = new FormData(form);
+    const messageError = document.getElementById('feedbackError');
+    
+    messageError.classList.add('hidden');
+    messageError.textContent = '';
+    
+    submitButton.disabled = true;
+    submitButton.innerHTML = 'Отправка...';
+    
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err; });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            form.reset();
+            alert(data.message);
+        } else {
+            if (data.errors) {
+                let errorMessage = '';
+                for (const field in data.errors) {
+                    errorMessage += data.errors[field][0] + '\n';
+                }
+                messageError.textContent = errorMessage;
+                messageError.classList.remove('hidden');
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        messageError.textContent = 'Произошла ошибка при отправке формы: ' + (error.message || 'Попробуйте позже');
+        messageError.classList.remove('hidden');
+    })
+    .finally(() => {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Отправить';
+    });
+});
+

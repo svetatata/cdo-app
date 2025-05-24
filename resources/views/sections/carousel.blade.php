@@ -6,12 +6,12 @@
         <!-- Swiper -->
         <div class="swiper mainSwiper rounded-xl shadow-lg" style="height: 400px">
             <div class="swiper-wrapper">
-                @foreach([
-                    ['image' => 'college.webp', 'title' => 'Образование в колледже', 'desc' => 'Получите среднее профессиональное образование дистанционно...'],
-                    ['image' => 'bachelor.webp', 'title' => 'Бакалавриат', 'desc' => 'Первая ступень высшего образования...'],
-                    ['image' => 'master.jpg', 'title' => 'Магистратура', 'desc' => 'Углубленное изучение специальности...'],
-                    ['image' => 'onlineedu.jpg', 'title' => 'Переподготовка', 'desc' => 'Освойте новую профессию за 3-6 месяцев...'],
-                ] as $slide)
+                    @foreach([
+                    ['image' => 'college.webp', 'title' => 'Образование в колледже', 'desc' => 'Получите среднее профессиональное образование дистанционно...', 'degree' => 'college'],
+                    ['image' => 'bachelor.webp', 'title' => 'Бакалавриат', 'desc' => 'Первая ступень высшего образования...', 'degree' => 'bachelor'],
+                    ['image' => 'master.jpg', 'title' => 'Магистратура', 'desc' => 'Углубленное изучение специальности...', 'degree' => 'master'],
+                    ['image' => 'onlineedu.jpg', 'title' => 'Переподготовка', 'desc' => 'Освойте новую профессию за 3-6 месяцев...', 'degree' => 'training'],
+                    ] as $slide)
                     <div class="swiper-slide relative">
                         <img src="{{ asset('images/banners/' . $slide['image']) }}" 
                              class="w-full h-full object-cover absolute inset-0" 
@@ -21,7 +21,7 @@
                             <div class="text-center text-white max-w-2xl">
                                 <h3 class="text-3xl font-bold mb-4">{{ $slide['title'] }}</h3>
                                 <p class="mb-6">{{ $slide['desc'] }}</p>
-                                <a href="#" class="btn btn-secondary">Подробнее</a>
+                                <a href="{{ route('programs.index', ['degree' => $slide['degree']]) }}" class="btn btn-secondary transition">Подробнее</a>
                             </div>
                         </div>
                     </div>

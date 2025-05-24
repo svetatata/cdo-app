@@ -23,7 +23,8 @@
                     </svg>
                 </div>
                 <input type="text" 
-                        name="query" id="query"
+                        name="query" 
+                        id="programSearch"
                         value="{{ request('query') }}"
                         placeholder="Поиск по названию, описанию или учебному заведению..." 
                         class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent text-base">
@@ -203,13 +204,16 @@
     @include('layout.feedback')
 </main>
 
-@include('layout.footer') 
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form.space-y-6');
-        form.addEventListener('submit', function(e) {
-            console.log('Form submitted with:', new FormData(form));
-        });
-    });
-    </script>
+document.getElementById('programSearch').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const query = this.value.trim();
+        if (query) {
+            window.location.href = "{{ route('programs.index') }}?query=" + encodeURIComponent(query);
+        }
+    }
+});
+</script>
+
+@include('layout.footer') 
